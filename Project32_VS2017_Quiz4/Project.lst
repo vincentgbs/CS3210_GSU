@@ -1,0 +1,170 @@
+Microsoft (R) Macro Assembler Version 14.16.27026.1	    03/12/19 19:48:37
+AddTwo.asm						     Page 1 - 1
+
+
+				; AddTwo.asm - adds two 32-bit integers.
+				; Chapter 3 example
+
+				.386
+				.model flat,stdcall
+				.stack 4096
+				ExitProcess proto,dwExitCode:dword
+
+ 00000000			.data
+					;#1
+					;myBytes BYTE 10h,20h,30h,40h
+					;myWords WORD 8Ah,3Bh,72h,44h,66h 
+					;myDoubles DWORD 1,2,3,4,5
+
+					;#3
+					;dVal DWORD 12345678h
+
+					;#5
+					;myBytes BYTE 10h,20h,30h,40h
+					;myWords WORD 3 DUP(?),2000h
+					;myString BYTE "ABCDE"
+
+					;#6
+					;myBytes BYTE 10h,20h,30h,40h
+					;myWords WORD 8Ah,3Bh,72h,44h,66h
+					;myDoubles DWORD 1,2,3,4,5
+					;myPointer DWORD myDoubles
+
+					;#class challenge
+ 00000000 41 77 61 64 20		source BYTE 'Awad Mussa',0
+	   4D 75 73 73 61
+	   00
+ 0000000B  0000000B [			dest BYTE SIZEOF source DUP(0)
+	    00
+	   ]
+
+ 00000000			.code
+ 00000000			main proc
+					;#1
+					;mov esi,OFFSET myBytes
+					;mov ax,[esi] ; a. AX =
+					;mov eax,DWORD PTR myWords ; b. EAX =
+
+					;mov esi,OFFSET myDoubles
+					;mov ax,[esi+2] ; c. AX =
+					;mov ax,[esi+6] ; d. AX =
+					;mov ax,[esi-4] ; e. AX =
+				 
+					;#2
+					;mov eax,0
+					;mov ecx,10 ; outer loop counter
+					;L1:
+					;mov eax,3
+					;mov ecx,5 ; inner loop counter
+					;L2:
+					;add eax,5
+					;loop L2 ; repeat inner loop
+					;loop L1 ; repeat outer loop
+
+					;#3
+					;mov ax,3
+					;mov WORD PTR dVal+2,ax
+					;mov eax,dVal
+
+					;#4
+					;mov eax,0
+					;mov ecx,10 ; outer loop counter
+					;L1:
+					;mov eax,3
+					;mov ecx,5 ; inner loop counter
+					;L2:
+					;add eax,5
+					;loop L2 ; repeat inner loop
+					;loop L1 ; repeat outer loop
+
+					;#5
+					;mov eax,TYPE myBytes ; a.
+					;mov eax,LENGTHOF myBytes ; b. 
+					;mov eax,SIZEOF myBytes ; c. 
+					;mov eax,TYPE myWords ; d. 
+					;mov eax,LENGTHOF myWords ; e. 
+					;mov eax,SIZEOF myWords ; f. 
+					;mov eax,SIZEOF myString ; g.
+
+					;mov eax, DWORD PTR myBytes
+
+					;#6
+					;mov esi,OFFSET myBytes
+					;mov al,[esi] ; a. AL =
+					;mov al,[esi+3] ; b. AL =
+					;mov esi,OFFSET myWords + 2
+					;mov ax,[esi] ; c. AX =
+					;mov edi,8 
+					;mov edx,[myDoubles + edi] ; d. EDX =
+					;mov edx,myDoubles[edi] ; e. EDX =
+					;mov ebx,myPointer
+					;mov eax,[ebx+4] ; f. EAX =
+
+					;#class challenge
+					;mov esi, 0
+					;mov ecx, SIZEOF source
+					;L1:
+					;	mov al, source[esi]
+					;	mov dest[esi], al
+					;	inc esi
+					;LOOP L1
+					
+
+ 00000000  BE 00000000 R		mov esi, OFFSET source
+ 00000005  BF 0000000B R		mov edi, OFFSET dest
+ 0000000A  B8 00000000			mov eax, 0
+ 0000000F  B9 0000000B			mov ecx, SIZEOF source
+ 00000014				L1:
+ 00000014  8A 1C 06				mov bl, [esi + eax]
+ 00000017  88 1C 07				mov [edi + eax], bl
+ 0000001A  40					inc eax
+ 0000001B  E2 F7			LOOP L1
+
+					invoke ExitProcess,0
+ 0000001D  6A 00	   *	    push   +000000000h
+ 0000001F  E8 00000000 E   *	    call   ExitProcess
+ 00000024			main endp
+				end main
+Microsoft (R) Macro Assembler Version 14.16.27026.1	    03/12/19 19:48:37
+AddTwo.asm						     Symbols 2 - 1
+
+
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+FLAT . . . . . . . . . . . . . .	GROUP
+STACK  . . . . . . . . . . . . .	32 Bit	 00001000 DWord	  Stack	  'STACK'	 
+_DATA  . . . . . . . . . . . . .	32 Bit	 00000016 DWord	  Public  'DATA'	
+_TEXT  . . . . . . . . . . . . .	32 Bit	 00000024 DWord	  Public  'CODE'	
+
+
+Procedures, parameters, and locals:
+
+                N a m e                 Type     Value    Attr
+
+ExitProcess  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+main . . . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 00000024 Public STDCALL
+  L1 . . . . . . . . . . . . . .	L Near	 00000014 _TEXT	
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+@CodeSize  . . . . . . . . . . .	Number	 00000000h   
+@DataSize  . . . . . . . . . . .	Number	 00000000h   
+@Interface . . . . . . . . . . .	Number	 00000003h   
+@Model . . . . . . . . . . . . .	Number	 00000007h   
+@code  . . . . . . . . . . . . .	Text   	 _TEXT
+@data  . . . . . . . . . . . . .	Text   	 FLAT
+@fardata?  . . . . . . . . . . .	Text   	 FLAT
+@fardata . . . . . . . . . . . .	Text   	 FLAT
+@stack . . . . . . . . . . . . .	Text   	 FLAT
+dest . . . . . . . . . . . . . .	Byte	 0000000B _DATA	
+source . . . . . . . . . . . . .	Byte	 00000000 _DATA	
+
+	   0 Warnings
+	   0 Errors
