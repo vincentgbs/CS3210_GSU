@@ -1,0 +1,99 @@
+Microsoft (R) Macro Assembler Version 14.16.27026.1	    03/28/19 14:39:32
+AddTwo.asm						     Page 1 - 1
+
+
+				; AddTwo.asm - adds two 32-bit integers.
+				; Chapter 3 example
+
+				.386
+				.model flat,stdcall
+				.stack 4096
+				ExitProcess proto,dwExitCode:dword
+
+ 00000000			.data
+ 00000000 00000000			sum SDWORD 0
+ 00000004 00000032			sample SDWORD 50
+ 00000008 0000000A			array SDWORD 10, 60, 20, 33, 72, 89, 45, 65, 72, 18
+	   0000003C
+	   00000014
+	   00000021
+	   00000048
+	   00000059
+	   0000002D
+	   00000041
+	   00000048
+	   00000012
+ 00000030 = 0000000A			arrayLen = ($ - array) / TYPE array
+
+ 00000000			.code
+ 00000000			main proc
+ 00000000  B8 00000000			mov eax, 0
+ 00000005  8B 15 00000004 R		mov edx, sample
+ 0000000B  BE 00000000			mov esi, 0
+ 00000010  B9 0000000A			mov ecx, arrayLen
+ 00000015			wh:
+ 00000015  3B F1			cmp esi, ecx
+ 00000017  7D 13			jge endofloop
+ 00000019  39 14 B5			cmp array[esi * 4], edx
+	   00000008 R
+ 00000020  7E 07			jle increasecounter
+ 00000022  03 04 B5			add eax, array[esi * 4]
+	   00000008 R
+ 00000029			increasecounter:
+ 00000029  46				inc esi
+ 0000002A  EB E9			jmp wh
+ 0000002C			endofloop:
+ 0000002C  A3 00000000 R		mov sum, eax
+
+					invoke ExitProcess,0
+ 00000031  6A 00	   *	    push   +000000000h
+ 00000033  E8 00000000 E   *	    call   ExitProcess
+ 00000038			main endp
+				end main
+Microsoft (R) Macro Assembler Version 14.16.27026.1	    03/28/19 14:39:32
+AddTwo.asm						     Symbols 2 - 1
+
+
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+FLAT . . . . . . . . . . . . . .	GROUP
+STACK  . . . . . . . . . . . . .	32 Bit	 00001000 DWord	  Stack	  'STACK'	 
+_DATA  . . . . . . . . . . . . .	32 Bit	 00000030 DWord	  Public  'DATA'	
+_TEXT  . . . . . . . . . . . . .	32 Bit	 00000038 DWord	  Public  'CODE'	
+
+
+Procedures, parameters, and locals:
+
+                N a m e                 Type     Value    Attr
+
+ExitProcess  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+main . . . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 00000038 Public STDCALL
+  wh . . . . . . . . . . . . . .	L Near	 00000015 _TEXT	
+  increasecounter  . . . . . . .	L Near	 00000029 _TEXT	
+  endofloop  . . . . . . . . . .	L Near	 0000002C _TEXT	
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+@CodeSize  . . . . . . . . . . .	Number	 00000000h   
+@DataSize  . . . . . . . . . . .	Number	 00000000h   
+@Interface . . . . . . . . . . .	Number	 00000003h   
+@Model . . . . . . . . . . . . .	Number	 00000007h   
+@code  . . . . . . . . . . . . .	Text   	 _TEXT
+@data  . . . . . . . . . . . . .	Text   	 FLAT
+@fardata?  . . . . . . . . . . .	Text   	 FLAT
+@fardata . . . . . . . . . . . .	Text   	 FLAT
+@stack . . . . . . . . . . . . .	Text   	 FLAT
+arrayLen . . . . . . . . . . . .	Number	 0000000Ah   
+array  . . . . . . . . . . . . .	DWord	 00000008 _DATA	
+sample . . . . . . . . . . . . .	DWord	 00000004 _DATA	
+sum  . . . . . . . . . . . . . .	DWord	 00000000 _DATA	
+
+	   0 Warnings
+	   0 Errors

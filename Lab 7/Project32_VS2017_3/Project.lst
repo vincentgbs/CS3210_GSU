@@ -1,0 +1,70 @@
+Microsoft (R) Macro Assembler Version 14.16.27026.1	    02/28/19 16:21:04
+AddTwo.asm						     Page 1 - 1
+
+
+				; AddTwo.asm - adds two 32-bit integers.
+				; Chapter 3 example
+
+				.386
+				.model flat,stdcall
+				.stack 4096
+				ExitProcess proto,dwExitCode:dword
+
+ 00000000			.data
+ 00000000 00010000			arrayD DWORD 10000h, 20000h, 30000
+	   00020000
+	   00007530
+					
+ 00000000			.code
+ 00000000			main proc
+ 00000000  A1 00000000 R		mov eax, arrayD+0	; EAX = 00010000
+ 00000005  8B 1D 00000004 R		mov ebx, [arrayD+4]	; EBX = 00020000
+ 0000000B  8B 15 00000008 R		mov edx, [arrayD+8]	; EDX = 00007530
+ 00000011  8B 0D 00000002 R		mov ecx, [arrayD+2]	; ECX = 00000001
+
+					invoke ExitProcess,0
+ 00000017  6A 00	   *	    push   +000000000h
+ 00000019  E8 00000000 E   *	    call   ExitProcess
+ 0000001E			main endp
+				end main
+Microsoft (R) Macro Assembler Version 14.16.27026.1	    02/28/19 16:21:04
+AddTwo.asm						     Symbols 2 - 1
+
+
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+FLAT . . . . . . . . . . . . . .	GROUP
+STACK  . . . . . . . . . . . . .	32 Bit	 00001000 DWord	  Stack	  'STACK'	 
+_DATA  . . . . . . . . . . . . .	32 Bit	 0000000C DWord	  Public  'DATA'	
+_TEXT  . . . . . . . . . . . . .	32 Bit	 0000001E DWord	  Public  'CODE'	
+
+
+Procedures, parameters, and locals:
+
+                N a m e                 Type     Value    Attr
+
+ExitProcess  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+main . . . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 0000001E Public STDCALL
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+@CodeSize  . . . . . . . . . . .	Number	 00000000h   
+@DataSize  . . . . . . . . . . .	Number	 00000000h   
+@Interface . . . . . . . . . . .	Number	 00000003h   
+@Model . . . . . . . . . . . . .	Number	 00000007h   
+@code  . . . . . . . . . . . . .	Text   	 _TEXT
+@data  . . . . . . . . . . . . .	Text   	 FLAT
+@fardata?  . . . . . . . . . . .	Text   	 FLAT
+@fardata . . . . . . . . . . . .	Text   	 FLAT
+@stack . . . . . . . . . . . . .	Text   	 FLAT
+arrayD . . . . . . . . . . . . .	DWord	 00000000 _DATA	
+
+	   0 Warnings
+	   0 Errors

@@ -1,0 +1,76 @@
+Microsoft (R) Macro Assembler Version 14.16.27026.1	    02/28/19 16:09:33
+AddTwo.asm						     Page 1 - 1
+
+
+				; AddTwo.asm - adds two 32-bit integers.
+				; Chapter 3 example
+
+				.386
+				.model flat,stdcall
+				.stack 4096
+				ExitProcess proto,dwExitCode:dword
+
+ 00000000			.data
+ 00000000 64				count BYTE 100
+ 00000001 0002				wVal WORD 2
+ 00000003 0004				wVal2 WORD 4
+
+ 00000000			.code
+ 00000000			main proc
+ 00000000  66| A1			mov ax, wVal
+	   00000001 R
+ 00000006  A0 00000000 R		mov al, count
+ 0000000B  A0 00000000 R		mov al, count
+ 00000010  66| 8B 1D			mov bx, wVal
+	   00000001 R
+ 00000017  66| 89 1D			mov wVal2, bx
+	   00000003 R
+
+					invoke ExitProcess,0
+ 0000001E  6A 00	   *	    push   +000000000h
+ 00000020  E8 00000000 E   *	    call   ExitProcess
+ 00000025			main endp
+				end main
+Microsoft (R) Macro Assembler Version 14.16.27026.1	    02/28/19 16:09:33
+AddTwo.asm						     Symbols 2 - 1
+
+
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+FLAT . . . . . . . . . . . . . .	GROUP
+STACK  . . . . . . . . . . . . .	32 Bit	 00001000 DWord	  Stack	  'STACK'	 
+_DATA  . . . . . . . . . . . . .	32 Bit	 00000005 DWord	  Public  'DATA'	
+_TEXT  . . . . . . . . . . . . .	32 Bit	 00000025 DWord	  Public  'CODE'	
+
+
+Procedures, parameters, and locals:
+
+                N a m e                 Type     Value    Attr
+
+ExitProcess  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+main . . . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 00000025 Public STDCALL
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+@CodeSize  . . . . . . . . . . .	Number	 00000000h   
+@DataSize  . . . . . . . . . . .	Number	 00000000h   
+@Interface . . . . . . . . . . .	Number	 00000003h   
+@Model . . . . . . . . . . . . .	Number	 00000007h   
+@code  . . . . . . . . . . . . .	Text   	 _TEXT
+@data  . . . . . . . . . . . . .	Text   	 FLAT
+@fardata?  . . . . . . . . . . .	Text   	 FLAT
+@fardata . . . . . . . . . . . .	Text   	 FLAT
+@stack . . . . . . . . . . . . .	Text   	 FLAT
+count  . . . . . . . . . . . . .	Byte	 00000000 _DATA	
+wVal2  . . . . . . . . . . . . .	Word	 00000003 _DATA	
+wVal . . . . . . . . . . . . . .	Word	 00000001 _DATA	
+
+	   0 Warnings
+	   0 Errors
